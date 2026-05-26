@@ -15,7 +15,7 @@ st.write("Klik tombol di bawah untuk mengambil foto obat Alpara / Amoxcilin.")
 def load_pytorch_model():
     # Inisialisasi arsitektur MobileNetV3 Small
     # weights=None karena kita akan me-load bobot dari file .pth sendiri
-    model = models.mobilenet_alpara(weights=None)
+    model = models.mobilenet_v3_small(weights=None)
     
     # Sesuaikan bagian classifier/layer terakhir dengan jumlah kelasmu (2 kelas: Alpara & Amoxcilin)
     # Catatan: Sesuaikan bagian ini jika saat training kamu memodifikasi struktur linear layer-nya
