@@ -15,7 +15,7 @@ st.write("Klik tombol di bawah untuk mengambil foto obat Alpara / Amoxcilin.")
 def load_pytorch_model():
     # Inisialisasi arsitektur MobileNetV3 Small
     # weights=None karena kita akan me-load bobot dari file .pth sendiri
-    model = models.mobilenet_v3_small(weights=None)
+    model = models.mobilenet_alpara(weights=None)
     
     # Sesuaikan bagian classifier/layer terakhir dengan jumlah kelasmu (2 kelas: Alpara & Amoxcilin)
     # Catatan: Sesuaikan bagian ini jika saat training kamu memodifikasi struktur linear layer-nya
@@ -24,7 +24,7 @@ def load_pytorch_model():
     
     # Load state_dict (bobot) yang sudah kamu simpan di Drive
     # map_location='cpu' memastikan model bisa berjalan meski device tidak punya GPU/CUDA
-    state_dict = torch.load('mobilenetv3_small_best.pth', map_location=torch.device('cpu'))
+    state_dict = torch.load('mobilenet_alpara.pth', map_location=torch.device('cpu'))
     model.load_state_dict(state_dict)
     
     # Ubah model ke mode evaluasi
