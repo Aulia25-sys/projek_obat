@@ -24,7 +24,7 @@ def load_pytorch_model():
     
     # Load state_dict (bobot) yang sudah kamu simpan di Drive
     # map_location='cpu' memastikan model bisa berjalan meski device tidak punya GPU/CUDA
-    state_dict = torch.load('mobilenet_alpara.pth', map_location=torch.device('cpu'))
+    state_dict = torch.load('mobilenetv3_small_5kelas.pth', map_location=torch.device('cpu'))
     model.load_state_dict(state_dict)
     
     # Ubah model ke mode evaluasi
