@@ -1,0 +1,10 @@
+streamlit==1.45.1
+torch==2.0.2
+torchvision==0.15.2
+numpy==2.0.2
+opencv-python-headless==4.8.1.78
+Pillow==10.4.0
+rembg==2.0.57
+scipy==1.14.1
+scikit-image==0.24.0
+onnxruntime==1.16.3
