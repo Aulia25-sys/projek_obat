@@ -1,10 +1,11 @@
-torch
-torchvision
-numpy==2.0.2
+torch==2.0.1+cpu
+torchvision==0.15.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy<2
 Pillow==10.4.0
 opencv-python-headless==4.13.0.92
 scipy==1.14.1
-onnxruntime==1.26.0
+onnxruntime==1.19.2
 pooch==1.9.0
 PyMatting==1.1.15
 rembg==2.0.57
