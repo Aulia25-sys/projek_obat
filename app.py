@@ -448,7 +448,7 @@ def predict(pil_img: Image.Image, model, device, use_rembg: bool = True):
     mean = np.array(IMAGENET_MEAN, dtype=np.float32)
     std  = np.array(IMAGENET_STD,  dtype=np.float32)
     arr  = (arr - mean) / std
-   tensor = torch.from_numpy(arr.transpose(2, 0, 1).copy()).unsqueeze(0).to(device)
+    tensor = torch.from_numpy(arr.transpose(2, 0, 1).copy()).unsqueeze(0).to(device)
     
     with torch.no_grad():
         out   = model(tensor)
