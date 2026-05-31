@@ -420,8 +420,9 @@ def clahe_enhance(img: Image.Image, clip_limit=1.5, tile=4) -> Image.Image:
     l_eq = clahe.apply(l)
     lab_eq = cv2.merge([l_eq, a, b])
     rgb_eq = cv2.cvtColor(lab_eq, cv2.COLOR_LAB2RGB)
-    return Image.fromarray(rgb_eq)
-
+    result = Image.fromarray(rgb_eq.astype(np.uint8), mode='RGB')  # explicit uint8 dan mode RGB
+    return result
+    
 def preprocess(img: Image.Image, use_rembg: bool = True) -> Image.Image:
     img = img.convert("RGB")
     if use_rembg:
