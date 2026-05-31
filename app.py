@@ -442,11 +442,14 @@ def preprocess(img: Image.Image, use_rembg: bool = True) -> Image.Image:
 # ─── INFERENCE ────────────────────────────────────────────────────────────────
 def predict(pil_img: Image.Image, model, device, use_rembg: bool = True):
     processed = preprocess(pil_img, use_rembg)
-    tf = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-    ])
-    tensor = tf(processed).unsqueeze(0).to(device)
+    
+    # Konversi manual tanpa ToTensor
+    arr = np.array(processed.convert("RGB"), dtype=np.float32) / 255.0
+    mean = np.array(IMAGENET_MEAN, dtype=np.float32)
+    std  = np.array(IMAGENET_STD,  dtype=np.float32)
+    arr  = (arr - mean) / std
+    tensor = torch.from_numpy(arr.transpose(2, 0, 1)).unsqueeze(0).to(device)
+    
     with torch.no_grad():
         out   = model(tensor)
         probs = torch.softmax(out, dim=1)[0].cpu().numpy()
