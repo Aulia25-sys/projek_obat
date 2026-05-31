@@ -438,21 +438,21 @@ def preprocess(img: Image.Image, use_rembg: bool = True) -> Image.Image:
     return img
 
 # ─── INFERENCE ────────────────────────────────────────────────────────────────
-def predict(pil_img: Image.Image, model, device, use_rembg: bool = True):
-    processed = preprocess(pil_img, use_rembg)  # kembalikan ini
-    
-    tf = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-    ])
-    tensor = tf(processed).unsqueeze(0).to(device)
-    with torch.no_grad():
-        out = model(tensor)
-        probs = torch.softmax(out, dim=1)[0].cpu().numpy()
-    pred_idx  = int(probs.argmax())
-    conf      = float(probs[pred_idx])
-    pred_name = CLASS_NAMES[pred_idx]
-    return pred_name, conf, probs, processed
+def preprocess(img: Image.Image, use_rembg: bool = True) -> Image.Image:
+    img = img.convert("RGB")
+    if use_rembg:
+        try:
+            from rembg import remove as rembg_remove
+            out = rembg_remove(img)
+            canvas = Image.new("RGB", out.size, (128, 128, 128))
+            canvas.paste(out, mask=out.split()[3])
+            img = canvas
+        except Exception:
+            pass
+    img = resize_with_pad(img)
+    img = clahe_enhance(img)
+    img = img.convert("RGB")  # TAMBAH INI
+    return img
 # ─── UI ───────────────────────────────────────────────────────────────────────
 
 # HERO
