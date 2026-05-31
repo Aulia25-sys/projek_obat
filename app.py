@@ -442,12 +442,11 @@ def preprocess(img: Image.Image, use_rembg: bool = True) -> Image.Image:
 # ─── INFERENCE ────────────────────────────────────────────────────────────────
 def predict(pil_img: Image.Image, model, device, use_rembg: bool = True):
     processed = preprocess(pil_img, use_rembg)
-    
-    # Konversi manual tanpa ToTensor
     arr = np.array(processed.convert("RGB"), dtype=np.float32) / 255.0
     mean = np.array(IMAGENET_MEAN, dtype=np.float32)
     std  = np.array(IMAGENET_STD,  dtype=np.float32)
     arr  = (arr - mean) / std
+    st.write(f"arr shape: {arr.shape}, dtype: {arr.dtype}")  # debug
     tensor = torch.from_numpy(arr.transpose(2, 0, 1).copy()).unsqueeze(0).to(device)
     
     with torch.no_grad():
