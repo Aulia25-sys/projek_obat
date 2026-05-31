@@ -448,7 +448,10 @@ def predict(pil_img: Image.Image, model, device, use_rembg: bool = True):
     arr  = (arr - mean) / std
     st.write(f"arr shape: {arr.shape}, dtype: {arr.dtype}")  # debug
     tensor = torch.from_numpy(arr.transpose(2, 0, 1).copy()).unsqueeze(0).to(device)
-    
+    st.write(f"tensor shape: {tensor.shape}, dtype: {tensor.dtype}")  # debug
+    with torch.no_grad():
+        out = model(tensor)
+        
     with torch.no_grad():
         out   = model(tensor)
         probs = torch.softmax(out, dim=1)[0].cpu().numpy()
